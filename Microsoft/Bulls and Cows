@@ -1,0 +1,76 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        // string hint= "";
+        // unordered_map<char, int>ms;
+        // unordered_map<char, int>mg;
+
+        // for(int i=0; i<secret.size(); i++){
+        //     ms[secret[i]]= i;
+        // }
+        // for(int i=0; i<guess.size(); i++){
+        //     mg[guess[i]]= i;
+        // }
+        // int x=0;
+        // int y=0;
+        // for(int i=0; i<secret.size(); i++){
+        //     int temp= secret[i];
+        //     if(mg.find(temp) != mg.end()){
+        //         if(mg[temp]== i){
+        //             x++;
+        //         }
+        //         else{
+        //             y++;
+        //         }
+        //     }
+        // }
+
+        // hint += to_string(x);
+        // hint += "A";
+        // hint += to_string(y);
+        // hint += "B";
+
+        // return hint;
+        // int x=0;
+        // int y=0;
+        // int nums[10];
+        // for(int i=0; i<secret.size(); i++){
+        //    int s= secret[i]- '0';
+        //    int g= guess[i] - '0';
+        //    if(s==g){
+        //        x++;
+        //    }
+        //    else{
+        //        if(nums[s]< 0) y++;
+        //        if(nums[g]> 0) y++;
+        //        nums[s]++;
+        //        nums[g]--;
+        //    }
+        // }
+        // return to_string(x)+ "A"+ to_string(y)+ "B";
+
+        int n=secret.size();
+        int cntb=0,cntc=0;
+        map<int,int> mp1;
+        map<int,int> mp2;
+        for(int i=0;i<n;i++)
+        {
+            if(secret[i]==guess[i])
+                cntb++;
+            else
+            {
+                mp1[secret[i]-'0']++;
+                mp2[guess[i]-'0']++;
+            }
+            
+        }
+        for(auto it:mp1)
+        {
+            if(mp2.find(it.first)!=mp2.end())
+            cntc+=min(mp2[it.first],it.second);
+        }
+        string s="";
+        s=to_string(cntb)+"A"+to_string(cntc)+"B";
+        return s;
+    }
+};
