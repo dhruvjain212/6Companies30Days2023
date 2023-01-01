@@ -1,4 +1,4 @@
-//Approch: 1. Iterate for all the characters in the given array.
+//Approach: 1. Iterate for all the characters in the given array.
 //           2. If character is a numerical value(operand) then push it into stack.
 //           3. If it is an operand then take two topmost elements from the stack and perform that operation on them.
 //           4. Push the result of the operation into stack.
