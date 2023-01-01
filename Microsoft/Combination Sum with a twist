@@ -1,8 +1,9 @@
-Approach: Use recursion and backtracking
+/*Approach: Use recursion and backtracking
 1.Create two arrays, one for storing the integers which gives sum = n and other one for storing the final answers.
 2.Check for every number between 1 and 9(both inclusive) and check if sum becomes equal to n and keep a track of no. of digits used by subtracting k by 1.
 3.Push the arr into final answer if the above condition is true.
 4.Else return.
+*/
 
 #include<vector>
 
