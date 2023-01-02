@@ -3,26 +3,60 @@ Approach: Similar problem as longest increasing subsequence.
 
 class Solution {
 public:
-    vector<int> largestDivisibleSubset(vector<int>& nums) {
-           int n = nums.size() ,ans = -1 ,  lastIndex =-1;
-        vector<int> dp(n, 1);
-        vector<int> trace(n, -1);
-        sort(nums.begin() , nums.end());
-
-     for(int i = 0; i < n; i++){
-          for(int j = 0; j < i; j++){
-
-             if((nums[i]%nums[j] == 0) && dp[j] >= dp[i]){ dp[i] = dp[j] + 1;   trace[i] = j;}             
-         }
-           if(dp[i] > ans){ans = dp[i];  lastIndex = i;} 
-    }
-
-        vector<int>path;
-        while(lastIndex != -1){
-            path.push_back(nums[lastIndex]);
-            lastIndex = trace[lastIndex];
+//     int solve(int index, int prev,int n, vector<int>&nums,vector<vector<int>>&dp){
+//         if(index== n){
+//             return 0;
+//         }
+//         // adding 1 in prev because initially prev is equal to -1 
+//         // and dp[index][-1] is not a legitimate address, so adding 1
+//         //  will make prev=0
+        
+//         if(dp[index][prev+1] != -1){
+//             return dp[index][prev+1];
+//         }
+//         //include
+//         int include=0;
+//         if(prev==-1 || nums[index]> nums[prev]){
+//             include= 1+ solve(index+1, index, n, nums, dp);
+//         }
+        
+//         //exclude
+//         int exclude=0;
+//         exclude= 0+ solve(index+1, prev, n, nums, dp);
+        
+        
+//         dp[index][prev+1]= max(include, exclude);
+//         return dp[index][prev+1];
+//     }
+    int solveTab(vector<int>&nums){
+        int n= nums.size();
+        vector<vector<int>>dp(n+1, vector<int>(n+1, 0));
+        
+        for(int index= n-1; index>=0; index--){
+            for(int prev= index-1; prev>= -1; prev--){
+                
+        //include
+        int include=0;
+        if(prev==-1 || nums[index]> nums[prev]){
+            include= 1+ dp[index+1][index+1];
         }
-        reverse(path.begin(), path.end());       
-          return path;
+        
+        //exclude
+        int exclude=0;
+        exclude= 0+ dp[index+1][prev+1];
+        
+        
+        dp[index][prev+1]= max(include, exclude);
+            }
+        }
+        
+        return dp[0][0];
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        // int n= nums.size();
+        // vector<vector<int>>dp(n+1, vector<int>(n+1, -1));
+        // return solve(0,-1, n, nums, dp);
+        
+         return solveTab(nums);
     }
 };
