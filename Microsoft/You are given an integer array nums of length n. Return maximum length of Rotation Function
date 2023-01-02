@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int findVal(vector<int>&nums, int n, int k){
+        int i=0;
+        int sum=0;
+        int j=0;
+        int l=k-1;;
+
+        for( j= 0; j< n-k; j++){
+            sum += (k*nums[j]);
+            k++;
+        }
+
+        int m= n-1;
+         while(m >= j){
+             sum += (l* nums[m]);
+             m--;
+             l--;
+         }
+         return sum;
+    }
+    int maxRotateFunction(vector<int>& nums) {
+        int ans= INT_MIN;
+        int n= nums.size();
+        for(int i=0; i<n; i++){
+            int sum= findVal(nums,n, i);
+            ans= max(ans, sum);
+        }
+        return ans;
+    }
+};
+//***The above solution is not correct for all the test cases.
+//Perfect solution of the problem is given below:
+
+  int maxRotateFunction(vector<int>& nums) {
+    
+        long sum = 0,original = 0;
+        
+        for(int i=0;i<nums.size();i++){
+            sum += nums[i];
+            original += i*nums[i];
+        }
+        
+        long maximum = original;
+        int n = nums.size();
+        
+        for(int i= n-1;i>=0;i--)
+        {
+            original += sum -(nums[i]*n);
+            maximum = max(original,maximum);
+        }
+        return maximum;
+    }   
